@@ -1,0 +1,135 @@
+{% extends 'customerbase.html' %}
+{% load static %}
+{% block content %}
+
+<div id="content">
+            <div class=" mt-4 container-fluid">
+
+                <h3 class="text-dark mb-4"><strong>Quotes</strong></h3>
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-header py-3"></div>
+                    <div class="card-body">
+                      {% include 'partials/_alerts.html' %}
+                        <div class="row">
+                            <!-- <div class="col-md-6 text-nowrap">
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
+                            </div> -->
+                            <!-- <div class="col-md-6">
+                                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                            </div> -->
+                        </div>
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                          {% if list %}
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>RFQ Unique ID</th>
+                                        <th>Manufacturer<br></th>
+                                        <th>Price</th>
+                                        <th>Duration ( In days )</th>
+                                        <th>Additional Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                  {% for li in list %}
+
+                                  {% if li.statuscheck %}
+                                    <tr>
+                                      <td>{{ li.unique_id }}</td>
+                                      <td>{{ li.uname }}</td>
+                                      <td>Rs. {{ li.estimatecost }}</td>
+                                      <td>{{ li.estimatedays }}</td>
+                                      <td>{{ li.moreinfo }}</td>
+                                      <td>
+                                        <button class="btn btn-primary" style="width: 90px;padding-right: 4px;padding-left: 4px;padding-top: 4px;padding-bottom: 4px;" disabled>Accepted</button>
+                                      </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                      <td>{{ li.unique_id }}</td>
+                                      <td>{{ li.uname }}</td>
+                                      <td>Rs. {{ li.estimatecost }}</td>
+                                      <td>{{ li.estimatedays }}</td>
+                                      <td>{{ li.moreinfo }}</td>
+                                      <form method="POST">
+                                        {% csrf_token %}
+                                        <td>
+                                          <input type="hidden" name="unique_id" value="{{li.unique_id}}">
+                                          <input type="hidden" name="uname" value="{{li.uname}}">
+                                          <button class="btn btn-primary" name='accept' type="submit" style="width: 70px;padding-right: 4px;padding-left: 4px;padding-top: 4px;padding-bottom: 4px;">Accept</button>
+                                        </td>
+                                      </form>
+
+                                    </tr>
+                                    {% endif %}
+
+                                    {% endfor %}
+
+                                </tbody>
+                                <tfoot>
+                                    <tr></tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                        {% else %}
+                        <p class='pl-4 pt-4'>No Quotes Available to Show !</p>
+                        {% endif %}
+
+
+
+
+                        <div class="row">
+                          <div class="col-md-6 align-self-center">
+                              <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Total Entries : {{ count }}</p>
+                          </div>
+                          <div class="col-md-12">
+                            {% if list.has_other_pages %}
+                            <ul class="pagination">
+                              {% if list.has_previous %}
+                              <li class='page-item'>
+                                <a href="?page={{list.previous_page_number}}" class='page-link'>
+                                  &laquo;
+                                </a>
+                              </li>
+                              {% else %}
+                              <li class='page-item disabled'>
+                                <a class='page-link'>&laquo;</a>
+                              </li>
+                              {% endif %}
+                              {% for i in list.paginator.page_range %}
+                              {% if list.number == i %}
+                              <li class='page-item active'>
+                                <a class='page-link'>{{i}}</a>
+                              </li>
+                              {% else %}
+                              <li class='page-item'>
+                                <a href="?page={{i}}" class='page-link'>{{i}}</a>
+                              </li>
+                              {% endif %}
+                              {% endfor %}
+                              {% if list.has_next %}
+                              <li class='page-item'>
+                                <a href="?page={{list.next_page_number}}" class='page-link'>
+                                  &raquo;
+                                </a>
+                              </li>
+                              {% else %}
+                              <li class='page-item disabled'>
+                                <a class='page-link'>&raquo;</a>
+                              </li>
+                              {% endif %}
+                            </ul>
+                            {% endif %}
+                          </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

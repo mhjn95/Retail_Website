@@ -1,0 +1,88 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+
+<div id="content">
+              
+            <div class="container-fluid">
+                <h3 class="text-dark pt-4 mb-4"><strong>Registered Customers</strong></h3>
+                <div class="card shadow" style="margin-bottom: 20px;">
+                    <div class="card-header py-3"></div>
+                    <div class="card-body">
+                        <div class="row">
+                          {% include 'partials/_alerts.html' %}
+                            <div class="col-md-6 text-nowrap">
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                  <label>
+                                    Forwarding For RFQ Unique ID : {{x}}
+
+                                </label>
+                                </div>
+                            </div>
+                            </div>
+
+
+
+
+
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            {% if list %}
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+
+                                      <th>Company Name</th>
+                                      <th>Zip Code</th>
+                                      <th>Status</th>
+                                      <th>Operations Offered</th>
+                                      <th>Resources</th>
+                                      <th>Choice</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for li in list %}
+                                    <tr>
+
+                                        <td>{{ li.company_name }}</td>
+                                        <td>{{ li.code }} </td>
+                                        <td>{{ li.status }} </td>
+                                        <td>{{ li.checkvalue }} </td>
+                                        <td>{{ li.resources }}</td>
+                                        <td>
+                                          <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="company_name" value="{{li.company_name}}">
+                                            <button type="submit" name="send" class="btn btn-danger" style='width:100px;'>Send</button>
+                                          </form>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+
+                                <tfoot>
+                                    <tr></tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        {% else %}
+                        <p class="pl-4"><strong>No searches avaialable for this combination ! Please try something else !</strong></p>
+                        {% endif %}
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

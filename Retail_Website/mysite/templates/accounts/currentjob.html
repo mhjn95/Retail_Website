@@ -1,0 +1,108 @@
+{% extends 'manufacturerbase.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+
+<div class='mt-3' id="content">
+
+<div class="container-fluid" style="padding-left: 20px;">
+    <h3 class="text-dark mb-4"><strong>Quotes Received</strong></h3>
+</div>
+{% include 'partials/_alerts.html' %}
+{% if data %}
+{% for da in data %}
+<div class="card" style="margin: 20px;padding: 0px;margin-bottom: 10px;">
+
+    <div class="card-header">
+        <div class="row">
+            <div class="col"><div class="form-text text-muted" style="font-size: 14;"><strong>RFQ Unique ID : {{ da.unique_id }}</strong></div></div>
+            <!-- <div class="col"><div class="form-text text-muted" style="font-size: 14;"><strong>Manufacturer Username</strong></div><div class="form-text text-muted" style="font-size: 13px;">{{ da.uname }}</div></div> -->
+            <div class="col"><div class="form-text text-muted" style="font-size: 14;"><strong>Customer Username</strong></div><div class="form-text text-muted" style="font-size: 13px;">{{ da.fromcustomer }}</div></div>
+            <div class="col"><div class="form-text text-muted" style="font-size: 14;"><strong>Date of Complaint :  {{ da.list_date | date:"d F Y" }} </strong></div></div>
+        </div>
+    </div>
+
+    <div class="card-body" style="padding: 10px;">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col"><div class="form-text text-muted" style="font-size: 18;"><strong>Complaint :</strong></div><small class="pl-4 form-text text-muted" style="font-size: 15px;">{{ da.complaint }}</small></div>
+
+            <!-- <div class="col"><small class="form-text text-muted" style="font-size: 14;"><strong>Operations</strong></small><small class="form-text text-muted" style="font-size: 13px;">{{ da.moreinfo }}</small></div> -->
+        </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <form method="POST">
+          {% csrf_token %}
+        <textarea name="resolutiontext" class='ml-5 px-2 py-2' rows="8" cols="150"></textarea>
+        <!-- <input type="hidden" name="uname" value="{{da.uname}}"> -->
+        <input type="hidden" name="unique_id" value="{{da.unique_id}}">
+        <button type="submit" name="resol" class="btn btn-danger ml-5 mb-3">Make a Resolution</button>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-text text-muted" style="font-size: 14;"> <strong>Already Made Resolution</strong>
+          <p></p>
+          <p class='mr-5'> {{ da.resolutions }}</p></div></div>
+      </div>
+    </div>
+
+
+
+</div>
+{% endfor %}
+{% else %}
+<p class="pl-4"><strong>No complaints !</strong></p>
+{% endif %}
+
+<div class="row mb-5 ml-3">
+  <div class="col-md-6 align-self-center">
+      <strong><p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Total Entries : {{ count }}</p></strong>
+  </div>
+  <div class="col-md-12">
+    {% if data.has_other_pages %}
+    <ul class="pagination">
+      {% if data.has_previous %}
+      <li class='page-item'>
+        <a href="?page={{data.previous_page_number}}" class='page-link'>
+          &laquo;
+        </a>
+      </li>
+      {% else %}
+      <li class='page-item disabled'>
+        <a class='page-link'>&laquo;</a>
+      </li>
+      {% endif %}
+      {% for i in data.paginator.page_range %}
+      {% if data.number == i %}
+      <li class='page-item active'>
+        <a class='page-link'>{{i}}</a>
+      </li>
+      {% else %}
+      <li class='page-item'>
+        <a href="?page={{i}}" class='page-link'>{{i}}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% if data.has_next %}
+      <li class='page-item'>
+        <a href="?page={{data.next_page_number}}" class='page-link'>
+          &raquo;
+        </a>
+      </li>
+      {% else %}
+      <li class='page-item disabled'>
+        <a class='page-link'>&raquo;</a>
+      </li>
+      {% endif %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container" style="padding-top: 150px;padding-right: 0px;">
+    <h1 style="font-family: Adamina, serif;"><strong>Sign In</strong></h1>
+</div>
+
+<div class="card-deck" style="font-family: Adamina, serif;padding-top: 50px;/*margin: auto;*/">
+    <div class="card">
+        <div class="card-body text-sm-center text-md-center text-lg-center text-xl-center">
+            <div class="col-sm-auto d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-xl-center" style="padding-top: 50px;"><a class="btn btn-success" role="button" id="signinc" href="{% url 'logincustomer' %}">Customer Sign In&nbsp;<i class="fa fa-user"></i></a></div>
+            <div class="col-sm-auto" style="padding-top: 25px;">
+            <h5 class="d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">Don't have an account?</h5><a class="d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center" href="{% url 'registercustomer' %}">Click here to Register</a></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body text-sm-center text-md-center text-lg-center text-xl-center">
+            <div class="col d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-xl-center" style="padding-top: 50px;"><a class="btn btn-primary" role="button" id="signinp" href="#">Partner Sign In&nbsp;<i class="fa fa-user"></i></a></div>
+            <div class="col" style="padding-top: 25px;">
+            <h5 class="d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center">New to Machine Work X?</h5><a class="d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center justify-content-sm-center justify-content-md-center justify-content-lg-center" href="#">Become a Partner</a></div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

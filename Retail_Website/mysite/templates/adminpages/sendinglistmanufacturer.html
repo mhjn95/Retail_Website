@@ -1,0 +1,152 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+
+<div id="content">
+
+            <div class="container-fluid">
+                <h3 class="text-dark pt-4 mb-4"><strong>Registered Customers</strong></h3>
+                <div class="card shadow" style="margin-bottom: 20px;">
+                    <div class="card-header py-3"></div>
+                    <div class="card-body">
+                        <div class="row">
+                          {% include 'partials/_alerts.html' %}
+                            <div class="col-md-6 text-nowrap">
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                  <label>
+                                    Forwarding For RFQ Unique ID : {{x}}
+
+                                </label>
+                                </div>
+                            </div>
+                            </div>
+
+
+
+
+
+                            <!-- searches -->
+                            <div class="container">
+                              <div class="row text-center">
+                                <div class="col-md-12">
+                                  <form id='form1' action="{% url 'searchforsending' x %}">
+
+                                    <div class="form-row">
+
+                                      <div class="col-md-4 mb-3">
+                                        <select name="checkvalue" class="form-control">
+                                          <option selected="true" disabled="disabled">Operations Offered</option>
+                                          {% for key,value in checkvalue_choices.items %}
+                                          <option value="{{ key }}" >{{ value }}</option>
+                                          {% endfor %}
+                                        </select>
+                                      </div>
+
+
+                                      <div class="col-md-4 mb-3">
+                                        <select name="status" class="form-control">
+                                          <option selected="true" disabled="disabled">Status</option>
+                                          {% for key,value in status_choices.items %}
+                                          <option value="{{ key }}" >{{ value }}</option>
+                                          {% endfor %}
+                                        </select>
+                                      </div>
+
+
+                                      <div class="col-md-4 mb-3">
+                                        <select class="form-control" name="resources">
+                                          <option selected='true' disabled='disabled'>Select Resources</option>
+                                          {% for key,value in resources_choices.items %}
+                                          <option value="{{ key }}">{{ value }}</option>
+                                          {% endfor %}
+                                        </select>
+                                      </div>
+
+                                    </div>
+
+                                    <div class="form-row">
+
+                                      <div class="col-md-4 mb-3">
+                                        <!-- <label> -->
+                                          <input type="text" name='keywords' class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search by Company Name">
+                                        <!-- </label> -->
+                                      </div>
+
+                                      <div class="col-md-4 mb-3">
+                                        <!-- <label> -->
+                                          <input type="text" name='code' class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search by Zip Code">
+                                        <!-- </label> -->
+                                      </div>
+
+                                      <div class="col-md-4">
+                                        <!-- <label> -->
+                                          <!-- <button class="btn-sm btn-block btn btn-primary" type="submit">Search</button> -->
+                                        <!-- </label> -->
+                                          <input type="hidden" name="x" value="{{x}}">
+                                          <a class="pb-2 btn btn-block btn-primary text-white" style='height:33px;' onclick="document.getElementById('form1').submit();" >Search</a>
+                                      </div>
+                                    </div>
+
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            {% if data %}
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead>
+                                    <tr>
+
+                                      <th>Company Name</th>
+                                      <th>Zip Code</th>
+                                      <th>Status</th>
+                                      <th>Operations Offered</th>
+                                      <th>Resources</th>
+                                      <th>Choice</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for li in data %}
+                                    <tr>
+
+                                        <td>{{ li.company_name }}</td>
+                                        <td>{{ li.code }} </td>
+                                        <td>{{ li.status }} </td>
+                                        <td>{{ li.checkvalue }} </td>
+                                        <td>{{ li.resources }}</td>
+                                        <form method="POST">
+                                          {% csrf_token %}
+                                          <td>
+                                            <input type="hidden" name="company_name" value="{{li.company_name}}">
+                                            <button class="btn btn-danger" name='send' style="width:100px;" type="submit">Send</button>
+                                          </td>
+                                        </form>
+
+
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+
+                                <tfoot>
+                                    <tr></tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        {% else %}
+                        <p class="pl-4"><strong>No Manufacturers Registered Yet !</strong></p>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}

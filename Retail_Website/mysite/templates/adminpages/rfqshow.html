@@ -1,0 +1,127 @@
+{% extends 'adminbase.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class='mt-3' id="content">
+
+            <div class="container-fluid" style="padding-left: 20px;">
+                <h3 class="text-dark mb-4"><strong>RFQ's Received</strong></h3>
+                {% if rfqdetails %}
+                  {% for rfqdet in rfqdetails %}
+                <div class="card" style="margin: 20px;font-family: Nunito, sans-serif;margin-left: 0px;margin-right: 0px;">
+                    <div class="card-body" style="padding: 15px;">
+                        <div class="row">
+                            <div class="col"><div class="form-text text-muted"><strong>RFQ Unique ID : {{ rfqdet.unique_id }}</strong></div>
+                            </div>
+                            <div class="col"><small class="form-text text-muted"><strong>Userame</strong></small><small class="form-text text-muted">{{ rfqdet.user_id }}</small></div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                            <div class="col" style="padding-right: 0px;padding-left: 10px;margin-bottom: -10px;">
+                                <!-- <div><a class="btn btn-primary" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-3" href="#collapse-3" role="button" style="margin-left: 10px;">RFQ Details</a> -->
+                                    <!-- <div class="collapse" id="collapse-3" style="margin-left: -10px;"> -->
+                                        <div class="card" style="margin: 20px;padding: 0px;margin-bottom: 10px;">
+                                            <div class="card-body" style="padding: 10px;">
+                                                <div class="row" style="margin-bottom: 10px;">
+                                                    <div class="col"><small class="form-text text-muted" style="font-size: 14px;"><strong>Attached RFQ</strong></small><small class="form-text text-muted" style="font-size: 13px;"><a href="{{ rfqdet.file.url }}" download>{{ rfqdet.file }}</a></small></div>
+                                                </div>
+                                                <div class="row" style="margin-bottom: 10px;">
+                                                    <div class="col"><small class="form-text text-muted" style="font-size: 14px;"><strong>Process</strong></small><small class="form-text text-muted" style="font-size: 13px;"> {{ rfqdet.process }}</small></div>
+                                                    <div
+                                                        class="col"><small class="form-text text-muted" style="font-size: 14;"><strong>Material</strong></small><small class="form-text text-muted" style="font-size: 13px;"> {{ rfqdet.material }}</small></div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <div class="col"><small class="form-text text-muted" style="font-size: 14px;"><strong>Additional Details</strong></small><small class="form-text text-justify text-muted" style="font-size: 13px;">{{ rfqdet.adddetails }}<br></small></div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <div class="col"><small class="form-text text-muted" style="font-size: 14px;"><strong>Preferences</strong><br></small></div>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <div class="col"><small class="form-text text-muted" style="font-size: 14;"><strong>Quality</strong></small><small class="form-text text-muted" style="font-size: 13px;">{{ rfqdet.quality}}</small></div>
+                                                <div class="col"><small class="form-text text-muted" style="font-size: 14;"><strong>Nearest to My Location</strong></small><small class="form-text text-muted" style="font-size: 13px;">{{ rfqdet.nearestloc}}</small></div>
+                                                <div
+                                                    class="col"><small class="form-text text-muted" style="font-size: 14;"><strong>Shortest Lead Time</strong></small><small class="form-text text-muted" style="font-size: 13px;">{{ rfqdet.leadtime}}</small></div>
+                                            <div
+                                                class="col"><small class="form-text text-muted" style="font-size: 14;"><strong>Lowest Pricing</strong></small><small class="form-text text-muted" style="font-size: 13px;">{{ rfqdet.pricing}}</small></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
+                </div>
+            </div>
+
+            <div class="row" style="width: 240px;margin-right: 0px;margin-left: 0px;">
+                    <div class="col"><button class="btn btn-block btn-primary" type="button" disabled>Revert</button></div>
+                    <form method="POST"  >
+                      {% csrf_token %}
+                      <div class="col">
+                        <input type="hidden" name="unique_id" value="{{rfqdet.unique_id}}">
+
+                          <a class="btn btn-block btn-success" href="{% url 'sendinglistmanufacturer'  rfqdet.unique_id %}">Forward</a>
+
+
+
+                      </div>
+                    </form>
+
+            </div>
+
+
+          </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p class="pl-4 pt-4"><strong>No RFQs recieved yet !</strong></p>
+          {% endif %}
+
+
+    </div>
+    <div class="row ml-4">
+      <div class="col-md-6 align-self-center">
+          <p id="dataTable_info" class="dataTables_info text-primary ml-2" style='font-size:18px;' role="status" aria-live="polite">Total Entries : {{ count }}</p>
+      </div>
+      <div class="col-md-12">
+        {% if rfqdetails.has_other_pages %}
+        <ul class="pagination">
+          {% if rfqdetails.has_previous %}
+          <li class='page-item'>
+            <a href="?page={{rfqdetails.previous_page_number}}" class='page-link'>
+              &laquo;
+            </a>
+          </li>
+          {% else %}
+          <li class='page-item disabled'>
+            <a class='page-link'>&laquo;</a>
+          </li>
+          {% endif %}
+          {% for i in rfqdetails.paginator.page_range %}
+          {% if rfqdetails.number == i %}
+          <li class='page-item active'>
+            <a class='page-link'>{{i}}</a>
+          </li>
+          {% else %}
+          <li class='page-item'>
+            <a href="?page={{i}}" class='page-link'>{{i}}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          {% if rfqdetails.has_next %}
+          <li class='page-item'>
+            <a href="?page={{rfqdetails.next_page_number}}" class='page-link'>
+              &raquo;
+            </a>
+          </li>
+          {% else %}
+          <li class='page-item disabled'>
+            <a class='page-link'>&raquo;</a>
+          </li>
+          {% endif %}
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    </div>
+
+{% endblock %}

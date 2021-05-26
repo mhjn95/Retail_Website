@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Machine Work X</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Adamina">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome5-overrides.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Customizable-Background--Overlay.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Footer-Dark.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Clean-1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Clean.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Dark.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Pretty-Footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Pretty-Registration-Form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tab.css' %}">
+    <style media="screen">
+    #ggh{
+      margin-left: 25px;
+      margin-right: 25px;
+      padding-bottom: 15px;
+    }
+      #para
+      {
+        /* padding-left: 50px; */
+        /* text-align: center; */
+        text-align: justify;
+        /* margin-right: -70px; */
+      }
+      #topbar{
+        margin-top: 20px;
+      }
+      #passcheck
+      {
+        margin-top: 100px;
+      }
+      #changer
+      {
+        margin-top: 50px;
+        align-items: center;
+        padding-left: 100px;
+      }
+      #box{
+        margin-bottom: 20px;
+        margin-top: -20px;
+      }
+
+      #page-header
+      {
+        min-height: 290px;
+        background: url(https://c4.wallpaperflare.com/wallpaper/868/901/132/tom-clancy-s-the-division-minimal-4k-wallpaper-preview.jpg);
+        background-position: 0 -360px;
+        background-attachment: fixed;
+        background-size: auto;
+        color: white;
+        border-bottom: 1px #eee solid;
+        /* padding-top: 50px; */
+      }
+
+      #page-header .dark-overlay2
+      {
+        /* position: absolute; */
+        /* padding-top: 100px; */
+        /* top: 0; */
+        left: 0;
+        width: 100%;
+        min-height: 290px;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      #page-header .page-inner
+      {
+        padding-top: 50px;
+      }
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+  {% include 'partials/_navbar.html' %}
+
+
+    {% block content %}
+    {% endblock %}
+
+
+  {% include 'partials/_footer.html' %}
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/message.js' %}"></script>
+    <script src="{% static 'js/password.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+</body>
+
+</html>

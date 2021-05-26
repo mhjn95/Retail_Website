@@ -1,0 +1,11 @@
+button, input {
+  width: 50%;
+}
+
+textarea {
+  width: 50%;
+}
+
+.topforcus{
+  margin-top: 120px;
+}

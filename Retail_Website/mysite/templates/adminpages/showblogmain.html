@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<header class='mb-3' id='page-header'>
+    <div class="dark-overlay2">
+    <div class="page-inner container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <div class="post-heading" style="margin-top: 0px;padding-top: 100px;padding-bottom: 100px; align:center">
+                    <h1 style="color: rgb(255,255,255);"><strong>{{ data.title }}</strong></h1>
+                    <div class="container">
+                      <span style="color: rgb(255,255,255); align:center">Posted by&nbsp; Admin &nbsp;on {{ data.list_date | date:"d F Y"}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</header>
+<article>
+    <div class="mt-4 container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto" style="margin-top: 12px;">
+                <p>{{ data.content }}</p>
+                {% if data.photo_main %}
+                <div class="container my-4 ml-3">
+                    <img src="{{ data.photo_main.url }}" style="width:85%" alt="">
+                </div>
+                {% else %}
+                <div class="">
+                  <small class="text-muted">*No pic uploaded for this post</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+{% endblock %}
